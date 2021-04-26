@@ -1,0 +1,21 @@
+version: '3'
+services: 
+    mysql-db:
+        image: mysql
+        ports:
+            - 3306:3306
+        environment: 
+            - MYSQL_ROOT_PASSWORD=root
+        volumes:
+            - mysql-data:/var/lib/mysql
+    rest-service:
+        image: rest-service:1.0
+        ports:
+            - 8080:8080
+        depends_on: 
+            - "mysql-db"
+        environment:
+            - DATABASE_HOST=mysql-db
+volumes:
+    mysql-data:
+        driver: local
